@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[2]:
 
 
 get_ipython().run_line_magic('matplotlib', 'inline')
 
 
-# In[2]:
+# In[3]:
 
 
 import matplotlib.pyplot as plt
@@ -242,7 +242,7 @@ import seaborn as sns
 pydataset.data('AirPassengers',show_doc=True)
 
 
-# In[57]:
+# In[5]:
 
 
 df = pydataset.data('AirPassengers')
@@ -357,7 +357,7 @@ plt.scatter(
 )
 
 
-# In[18]:
+# In[6]:
 
 
 import mplleaflet
@@ -368,4 +368,226 @@ plt.scatter(
     marker='.'
 )
 mplleaflet.display()
+
+
+# In[7]:
+
+
+df = pd.read_csv('reported.csv')
+
+
+# In[8]:
+
+
+df.head()
+
+
+# In[9]:
+
+
+df.fillna(0,inplace=True)
+
+
+# In[10]:
+
+
+df.head()
+
+
+# In[11]:
+
+
+plt.plot(df['Year'],df['crimes.total'],'-r')
+plt.plot(df['Year'],df['crimes.person'],'-b')
+plt.show()
+
+
+# In[13]:
+
+
+fig, ax = plt.subplots()
+ax.plot(df['Year'],df['crimes.total'],'-r')
+ax.plot(df['Year'],df['crimes.person'],'-b')
+ax.legend()
+
+
+# In[14]:
+
+
+fig, ax = plt.subplots()
+ax.plot(df['Year'],df['crimes.total'],'-r')
+ax.plot(df['Year'],df['crimes.person'],'-b')
+ax.legend(loc='upper left')
+
+
+# In[15]:
+
+
+fig, ax = plt.subplots()
+ax.plot(df['Year'],df['crimes.total'],'-r')
+ax.plot(df['Year'],df['crimes.person'],'-b')
+ax.legend(loc='upper left')
+ax.set_ylabel('Quantity')
+ax.set_xlabel('Year')
+ax.set_title('Crimes: Total x Person')
+
+
+# In[16]:
+
+
+fig, ax = plt.subplots()
+ax.plot(df['Year'],df['crimes.total'],'-r')
+ax.plot(df['Year'],df['crimes.person'],'-b')
+ax.legend(loc='upper left')
+ax.set_ylabel('Quantity')
+ax.set_xlabel('Year')
+ax.set_title('Crimes: Total x Person')
+ax.set_xlim([df['Year'].min(),df['Year'].max()])
+
+
+# In[17]:
+
+
+fig, ax = plt.subplots()
+ax.plot(df['Year'],df['crimes.total'],'-r')
+ax.plot(df['Year'],df['crimes.person'],'-b')
+ax.legend(loc='upper left')
+ax.set_ylabel('Quantity')
+ax.set_xlabel('Year')
+ax.set_title('Crimes: Total x Person')
+ax.set_xlim([df['Year'].min(),df['Year'].max()])
+ax.plot()
+
+
+# In[18]:
+
+
+get_ipython().run_line_magic('matplotlib', 'inline')
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn
+import matplotlib.dates as dates
+import datetime as dt
+
+
+# In[19]:
+
+
+df = pd.read_csv('ppz-jan-fev-2017.csv')
+
+
+# In[20]:
+
+
+df.head()
+
+
+# In[21]:
+
+
+df.tail()
+
+
+# In[22]:
+
+
+def to_date(value):
+    return dt.datetime(2017,1,1) + dt.timedelta(hours=value)
+
+
+# In[23]:
+
+
+df['date'] = df['hour'].apply(to_date)
+
+
+# In[24]:
+
+
+df.head()
+
+
+# In[26]:
+
+
+df.tail()
+
+
+# In[27]:
+
+
+del df['hour']
+df.head()
+
+
+# In[28]:
+
+
+df.set_index(['date'],inplace=True)
+
+
+# In[30]:
+
+
+df.head()
+
+
+# In[34]:
+
+
+fig,ax = plt.subplots()
+ax.plot_date(df.index.to_pydatetime(),df['views'],'b-')
+ax.xaxis.set_minor_locator(dates.DayLocator(bymonthday=range(5,32,5)))
+ax.xaxis.set_minor_formatter(dates.DateFormatter('%d'))
+ax.xaxis.grid(True,which='minor')
+ax.yaxis.grid()
+ax.xaxis.set_major_locator(dates.MonthLocator())
+ax.xaxis.set_major_formatter(dates.DateFormatter('%b'))
+ax.set_xlim([df.index.to_pydatetime().min(),df.index.to_pydatetime().max()])
+plt.tight_layout()
+plt.show()
+
+
+# In[36]:
+
+
+import locale
+
+
+# In[38]:
+
+
+locale.setlocale(locale.LC_ALL,'pt_BR')
+
+
+# In[39]:
+
+
+fig,ax = plt.subplots()
+ax.plot_date(df.index.to_pydatetime(),df['views'],'b-')
+ax.xaxis.set_minor_locator(dates.DayLocator(bymonthday=range(5,32,5)))
+ax.xaxis.set_minor_formatter(dates.DateFormatter('%d'))
+ax.xaxis.grid(True,which='minor')
+ax.yaxis.grid()
+ax.xaxis.set_major_locator(dates.MonthLocator())
+ax.xaxis.set_major_formatter(dates.DateFormatter('%b'))
+ax.set_xlim([df.index.to_pydatetime().min(),df.index.to_pydatetime().max()])
+plt.tight_layout()
+plt.show()
+
+
+# In[40]:
+
+
+fig,ax = plt.subplots()
+ax.plot_date(df.index.to_pydatetime(),df['views'],'b-')
+ax.xaxis.set_minor_locator(dates.DayLocator(bymonthday=range(5,32,5),interval=2))
+ax.xaxis.set_minor_formatter(dates.DateFormatter('%d'))
+ax.xaxis.grid(True,which='minor')
+ax.yaxis.grid()
+ax.xaxis.set_major_locator(dates.MonthLocator())
+ax.xaxis.set_major_formatter(dates.DateFormatter('%b'))
+ax.set_xlim([df.index.to_pydatetime().min(),df.index.to_pydatetime().max()])
+plt.tight_layout()
+plt.show()
 
